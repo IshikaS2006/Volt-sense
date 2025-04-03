@@ -65,8 +65,10 @@
   </div>
   <script>
     if (localStorage.getItem("isLoggedIn") !== "true") {
-        window.location.href = "login.html"; // Redirect back to login if not logged in
-    }
+    alert("You are not logged in! Redirecting to login page.");
+    window.location.href = "https://ishikas2006.github.io/Volt-sense/login.html"; // ✅ Use full URL
+}
+
 </script>
 
 </body>

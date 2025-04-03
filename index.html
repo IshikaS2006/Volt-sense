@@ -105,27 +105,30 @@
 
     <script>
         document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            // Set the correct username and password here
-            const correctUsername = "admin";
-            const correctPassword = "password123";
-            
-            if (username === correctUsername && password === correctPassword) {
-                // Successful login, redirect to dash.html
-                window.location.href = "https://ishkas2006.github.io/Volt-sense/dash.html";
+    event.preventDefault();
+    
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    
+    // Set the correct username and password here
+    const correctUsername = "admin";
+    const correctPassword = "password123";
+    
+    if (username === correctUsername && password === correctPassword) {
+        // ✅ Store login status before redirecting
+        localStorage.setItem("isLoggedIn", "true");
 
-            } else {
-                // Show error message
-                document.getElementById('errorMessage').style.display = 'block';
-                
-                // Clear the password field
-                document.getElementById('password').value = '';
-            }
-        });
+        // ✅ Use full URL to avoid GitHub Pages routing issues
+        window.location.href = "https://ishikas2006.github.io/Volt-sense/dash.html";
+    } else {
+        // Show error message
+        document.getElementById('errorMessage').style.display = 'block';
+        
+        // Clear the password field
+        document.getElementById('password').value = '';
+    }
+});
+
     </script>
 </body>
 </html>
