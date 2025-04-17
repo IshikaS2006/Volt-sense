@@ -1,134 +1,438 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Volt-Sense Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            background-color: #f5f5f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+      :root {
+        --primary: #6366f1;
+        --primary-dark: #4f46e5;
+        --primary-light: #818cf8;
+        --text-dark: #1f2937;
+        --text-light: #6b7280;
+        --background: #f9fafb;
+        --card-bg: rgba(255, 255, 255, 0.9);
+        --error: #ef4444;
+        --success: #10b981;
+        --border-radius: 12px;
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        --transition: all 0.3s ease;
+      }
 
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(135deg, #f0f4ff, #e5eeff);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Decorative background elements */
+      body::before,
+      body::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        z-index: -1;
+      }
+
+      body::before {
+        width: 300px;
+        height: 300px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-light),
+          var(--primary)
+        );
+        opacity: 0.1;
+        top: -100px;
+        right: -100px;
+      }
+
+      body::after {
+        width: 400px;
+        height: 400px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        opacity: 0.1;
+        bottom: -150px;
+        left: -150px;
+      }
+
+      .login-container {
+        background: var(--card-bg);
+        backdrop-filter: blur(10px);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-lg);
+        padding: 40px;
+        width: 100%;
+        max-width: 420px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        position: relative;
+        overflow: hidden;
+        transition: var(--transition);
+      }
+
+      .login-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+          0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+
+      /* Shimmer effect on container */
+      .login-container::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+          to bottom right,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.1) 50%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        transform: rotate(30deg);
+        animation: shimmer 6s infinite;
+        z-index: -1;
+      }
+
+      @keyframes shimmer {
+        0% {
+          transform: translateX(-100%) rotate(30deg);
+        }
+        100% {
+          transform: translateX(100%) rotate(30deg);
+        }
+      }
+
+      h1 {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 32px;
+        text-align: center;
+        letter-spacing: -0.5px;
+        position: relative;
+        display: inline-block;
+        width: 100%;
+      }
+
+      h1::after {
+        content: "";
+        position: absolute;
+        height: 4px;
+        width: 40px;
+        background: linear-gradient(
+          to right,
+          var(--primary),
+          var(--primary-light)
+        );
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 2px;
+      }
+
+      .input-group {
+        margin-bottom: 24px;
+        position: relative;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--text-light);
+        font-weight: 500;
+        font-size: 14px;
+        transition: var(--transition);
+      }
+
+      input {
+        width: 100%;
+        padding: 14px 16px;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 15px;
+        color: var(--text-dark);
+        transition: var(--transition);
+        background-color: rgba(255, 255, 255, 0.8);
+      }
+
+      input:hover {
+        border-color: #d1d5db;
+      }
+
+      input:focus {
+        border-color: var(--primary);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      }
+
+      input::placeholder {
+        color: #9ca3af;
+      }
+
+      button {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(
+          to right,
+          var(--primary),
+          var(--primary-dark)
+        );
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.2),
+          0 2px 4px -1px rgba(99, 102, 241, 0.1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 8px -1px rgba(99, 102, 241, 0.3),
+          0 4px 6px -1px rgba(99, 102, 241, 0.2);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      /* Button ripple effect */
+      button::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+        background-repeat: no-repeat;
+        background-position: 50%;
+        transform: scale(10, 10);
+        opacity: 0;
+        transition: transform 0.3s, opacity 0.5s;
+      }
+
+      button:active::after {
+        transform: scale(0, 0);
+        opacity: 0.3;
+        transition: 0s;
+      }
+
+      .error-message {
+        color: var(--error);
+        margin-top: 16px;
+        text-align: center;
+        font-size: 14px;
+        display: none;
+        padding: 8px 12px;
+        background-color: rgba(239, 68, 68, 0.1);
+        border-radius: 6px;
+        transform: translateY(-10px);
+        opacity: 0;
+        transition: all 0.3s ease;
+      }
+
+      .error-message.visible {
+        display: block;
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 480px) {
         .login-container {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-            width: 100%;
-            max-width: 400px;
+          padding: 30px 20px;
         }
 
         h1 {
-            text-align: center;
-            margin-bottom: 24px;
-            color: #333;
+          font-size: 24px;
         }
 
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-            font-weight: 600;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-
-        input:focus {
-            border-color: #4a90e2;
-            outline: none;
-        }
-
+        input,
         button {
-            width: 100%;
-            padding: 12px;
-            background-color: #4a90e2;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s;
+          padding: 12px;
         }
+      }
 
-        button:hover {
-            background-color: #3a7bc8;
+      /* Subtle progress loader for button */
+      @keyframes gradient-shift {
+        0% {
+          background-position: 0% 50%;
         }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
 
-        .error-message {
-            color: #e74c3c;
-            margin-top: 16px;
-            text-align: center;
-            font-size: 14px;
-            display: none;
-        }
+      button.loading {
+        background-size: 200% 200%;
+        background-image: linear-gradient(
+          45deg,
+          var(--primary) 0%,
+          var(--primary-dark) 25%,
+          var(--primary) 50%,
+          var(--primary-dark) 75%,
+          var(--primary) 100%
+        );
+        animation: gradient-shift 2s ease infinite;
+        pointer-events: none;
+      }
+
+      button.loading::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.1);
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="login-container">
-        <h1>Login</h1>
-        <form id="loginForm">
-            <div class="input-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="input-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit">Login</button>
-            <p id="errorMessage" class="error-message">Invalid username or password</p>
-        </form>
+      <h1>Welcome to Volt-Sense</h1>
+      <form id="loginForm">
+        <div class="input-group">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Enter your username"
+            required
+          />
+        </div>
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+        <button type="submit" id="loginButton">Login</button>
+        <p id="errorMessage" class="error-message">
+          Invalid username or password
+        </p>
+      </form>
     </div>
-
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    
-    // Set the correct username and password here
-    const correctUsername = "admin";
-    const correctPassword = "password123";
-    
-    if (username === correctUsername && password === correctPassword) {
-        // ✅ Store login status before redirecting
-        localStorage.setItem("isLoggedIn", "true");
+      const loginForm = document.getElementById("loginForm");
+      const loginButton = document.getElementById("loginButton");
+      const errorMessage = document.getElementById("errorMessage");
 
-        // ✅ Use full URL to avoid GitHub Pages routing issues
-        window.location.href = "https://ishikas2006.github.io/Volt-sense/dash.html";
-    } else {
-        // Show error message
-        document.getElementById('errorMessage').style.display = 'block';
-        
-        // Clear the password field
-        document.getElementById('password').value = '';
-    }
-});
+      loginForm.addEventListener("submit", function (event) {
+        event.preventDefault();
 
+        // Add loading state to button
+        loginButton.classList.add("loading");
+        loginButton.textContent = "Authenticating...";
+
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        // Simulate network delay
+        setTimeout(() => {
+          // Set the correct username and password here
+          const correctUsername = "admin";
+          const correctPassword = "password123";
+
+          if (username === correctUsername && password === correctPassword) {
+            // Store login status before redirecting
+            localStorage.setItem("isLoggedIn", "true");
+
+            // Change button state to success
+            loginButton.textContent = "Success!";
+            loginButton.style.background = "var(--success)";
+
+            // Redirect after a short delay
+            setTimeout(() => {
+              window.location.href = window.location.href =
+                "http://127.0.0.1:5500/dash.html";
+            }, 500);
+          } else {
+            // Show error message with animation
+            errorMessage.classList.add("visible");
+
+            // Reset button
+            loginButton.classList.remove("loading");
+            loginButton.textContent = "Login";
+
+            // Shake effect on the form
+            loginForm.style.animation = "shake 0.5s";
+            setTimeout(() => {
+              loginForm.style.animation = "";
+            }, 500);
+
+            // Clear the password field
+            document.getElementById("password").value = "";
+          }
+        }, 800);
+      });
+
+      // Add shake animation
+      const style = document.createElement("style");
+      style.textContent = `
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+          20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+      `;
+      document.head.appendChild(style);
+
+      // Clear error message when user starts typing again
+      document
+        .getElementById("username")
+        .addEventListener("input", function () {
+          errorMessage.classList.remove("visible");
+        });
+
+      document
+        .getElementById("password")
+        .addEventListener("input", function () {
+          errorMessage.classList.remove("visible");
+        });
     </script>
-</body>
+  </body>
 </html>

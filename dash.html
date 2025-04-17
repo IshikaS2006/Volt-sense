@@ -1,75 +1,376 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=di, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <div class="main">
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 p-6 md:p-10">
-      <header className="max-w-5xl mx-auto mb-10">
-        <div className="text-center">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500 mb-3">
-            Sensor Dashboard
-          </h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Real-time monitoring of environmental conditions from connected
-            sensors
-          </p>
-        </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Volt-Sense Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary-gradient: linear-gradient(135deg, #8a63d2, #e95f9a);
+        --bg-gradient: linear-gradient(
+          135deg,
+          rgba(245, 243, 255, 0.9),
+          rgba(253, 242, 248, 0.9)
+        );
+        --box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        --hover-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        --card-border-radius: 16px;
+        --transition-speed: 0.3s ease;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        color: #333;
+        line-height: 1.6;
+        min-height: 100vh;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      /* Background video container */
+      .video-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -2;
+        overflow: hidden;
+      }
+
+      .video-background video {
+        position: absolute;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        object-fit: cover;
+      }
+
+      /* Overlay for better text readability */
+      .background-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--bg-gradient);
+        z-index: -1;
+      }
+
+      .main {
+        min-height: 100vh;
+        padding: 2rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      header {
+        max-width: 1080px;
+        margin: 0 auto 3rem;
+        padding: 2rem 1rem;
+        position: relative;
+        backdrop-filter: blur(5px);
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      header::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 3px;
+        width: 60px;
+        background: var(--primary-gradient);
+        border-radius: 3px;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 0.75rem;
+        letter-spacing: -0.5px;
+        text-align: center;
+      }
+
+      header p {
+        text-align: center;
+        color: #333;
+        max-width: 600px;
+        margin: 0 auto;
+        font-weight: 400;
+        font-size: 1.1rem;
+      }
+
+      .dashboard-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: var(--card-border-radius);
+        overflow: hidden;
+        box-shadow: var(--box-shadow);
+        transition: transform var(--transition-speed),
+          box-shadow var(--transition-speed);
+        border: 1px solid rgba(233, 95, 154, 0.1);
+        backdrop-filter: blur(10px);
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--hover-shadow);
+      }
+
+      .card-header {
+        padding: 1.25rem 1.5rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .card-header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--primary-gradient);
+        opacity: 0.08;
+        z-index: -1;
+      }
+
+      .card-header h2 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #444;
+        text-transform: capitalize;
+        display: flex;
+        align-items: center;
+      }
+
+      .card-header h2::before {
+        content: "";
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        background: var(--primary-gradient);
+        border-radius: 50%;
+        margin-right: 12px;
+      }
+
+      .card-body {
+        padding: 0.75rem;
+        display: flex;
+        justify-content: center;
+      }
+
+      .card iframe {
+        border: none;
+        width: 100%;
+        max-width: 450px;
+        height: 260px;
+        border-radius: 8px;
+        transition: opacity var(--transition-speed);
+      }
+
+      .card:hover iframe {
+        opacity: 0.95;
+      }
+
+      .current-card .card-header::before {
+        background: linear-gradient(
+          135deg,
+          rgba(233, 95, 154, 0.1),
+          rgba(233, 95, 154, 0.2)
+        );
+      }
+
+      .voltage-card .card-header::before {
+        background: linear-gradient(
+          135deg,
+          rgba(138, 99, 210, 0.1),
+          rgba(138, 99, 210, 0.2)
+        );
+      }
+
+      .footer-info {
+        text-align: center;
+        margin-top: 2rem;
+        padding: 1rem;
+        color: #333;
+        font-size: 0.875rem;
+        position: relative;
+        background: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(5px);
+        border-radius: 30px;
+        display: inline-block;
+        margin-left: 50%;
+        transform: translateX(-50%);
+        padding: 0.75rem 2rem;
+      }
+
+      .footer-info p {
+        position: relative;
+        display: inline-block;
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2rem;
+        }
+
+        header p {
+          font-size: 1rem;
+        }
+
+        .main {
+          padding: 1rem;
+        }
+
+        .cards-grid {
+          gap: 1.25rem;
+        }
+      }
+
+      /* Subtle loading animation for data refresh */
+      @keyframes pulse {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.7;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      .live-indicator {
+        display: inline-flex;
+        align-items: center;
+        font-size: 0.875rem;
+        color: #333;
+      }
+
+      .live-indicator::before {
+        content: "";
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #e95f9a;
+        margin-right: 8px;
+        animation: pulse 2s infinite ease-in-out;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Background video -->
+    <div class="video-background">
+      <video autoplay muted loop playsinline>
+        <source
+          src="https://cdn.pixabay.com/vimeo/328216439/abstract-21112.mp4?width=1280&hash=4c4c5890312ed6645fbd2a59f5d18c0eb8ca0f21"
+          type="video/mp4"
+        />
+        <!-- Fallback image if video doesn't load -->
+        <img
+          src="https://cdn.pixabay.com/photo/2018/03/15/16/11/background-3228704_1280.jpg"
+          alt="IoT background"
+        />
+      </video>
+    </div>
+
+    <!-- Overlay for better text readability -->
+    <div class="background-overlay"></div>
+
+    <div class="main">
+      <header>
+        <h1>Sensor Dashboard</h1>
+        <p>
+          Real-time monitoring of environmental conditions from connected
+          sensors
+        </p>
       </header>
 
-      <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          
-          <div className="bg-white rounded-xl shadow-md overflow-hidden border border-pink-100 hover:shadow-lg transition-shadow duration-300">
-            <div className="bg-gradient-to-r from-pink-100 to-pink-200 px-4 py-3">
-              <div className="flex items-center">
-                
-                <h2 className="text-lg font-semibold text-gray-800">
-                  Temperature
-                </h2>
-              </div>
+      <div class="dashboard-container">
+        <div class="cards-grid">
+          <div class="card current-card">
+            <div class="card-header">
+              <h2>Current</h2>
             </div>
-            <div className="p-3">
-              <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2902601/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
+            <div class="card-body">
+              <iframe
+                src="https://thingspeak.com/channels/2902601/charts/2?bgcolor=%23ffffff&color=%23e95f9a&dynamic=true&results=60&type=line&update=15"
+              ></iframe>
             </div>
           </div>
 
-       
-          <div className="bg-white rounded-xl shadow-md overflow-hidden border border-purple-100 hover:shadow-lg transition-shadow duration-300">
-            <div className="bg-gradient-to-r from-purple-100 to-purple-200 px-4 py-3">
-              <div className="flex items-center">
-                
-                <h2 className="text-lg font-semibold text-gray-800">
-                  Humidity
-                </h2>
-              </div>
+          <div class="card voltage-card">
+            <div class="card-header">
+              <h2>Voltage</h2>
             </div>
-            <div className="p-3">
-              <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2902601/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
+            <div class="card-body">
+              <iframe
+                src="https://thingspeak.com/channels/2902601/charts/1?bgcolor=%23ffffff&color=%238a63d2&dynamic=true&results=60&type=line&update=15"
+              ></iframe>
             </div>
           </div>
-
-        
         </div>
 
-        <div className="mt-8 text-center">
-          <p className="text-sm text-gray-500">
+        <div class="footer-info">
+          <div class="live-indicator">
             Data refreshes automatically every 15 seconds
-          </p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <script>
-    if (localStorage.getItem("isLoggedIn") !== "true") {
-    alert("You are not logged in! Redirecting to login page.");
-    window.location.href = "https://ishikas2006.github.io/Volt-sense/index.html"; // ✅ Use full URL
-}
+    <script>
+      if (localStorage.getItem("isLoggedIn") !== "true") {
+        alert("You are not logged in! Redirecting to login page.");
+        window.location.href =
+          "https://ishikas2006.github.io/Volt-sense/index.html";
+      }
 
-</script>
-
-</body>
+      // Enhance iframe loading experience
+      document.addEventListener("DOMContentLoaded", function () {
+        const iframes = document.querySelectorAll("iframe");
+        iframes.forEach((iframe) => {
+          iframe.onload = function () {
+            this.style.opacity = "1";
+          };
+          iframe.style.opacity = "0.6";
+        });
+      });
+    </script>
+  </body>
 </html>
