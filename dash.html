@@ -31,6 +31,41 @@
       }
 
       body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f4f8f5;
+        color: #2f2f2f;
+        margin: 0;
+        padding: 2rem;
+      }
+      .container {
+        max-width: 960px;
+        margin: auto;
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1c6630;
+      }
+      ul {
+        list-style: none;
+        padding-left: 0;
+      }
+      li {
+        margin-bottom: 0.5rem;
+      }
+      .section {
+        margin-bottom: 2rem;
+      }
+      .highlight {
+        font-weight: bold;
+        color: #388e3c;
+      }
+
+      body {
         font-family: "Inter", sans-serif;
         color: #333;
         line-height: 1.6;
@@ -352,6 +387,60 @@
             Data refreshes automatically every 15 seconds
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <h1>🔋 Battery Management System – About Us</h1>
+
+      <div class="section">
+        <h2>👥 Group Members</h2>
+        <ul>
+          <li><span class="highlight">Anshuman Padhy</span> – Project Lead</li>
+          <li><span class="highlight">Manoj</span> – Prototype Tester</li>
+          <li>
+            <span class="highlight">Ishika Singh</span> – Prototype Developer
+          </li>
+          <li><span class="highlight">Kundan Kumar Jha</span> – Researcher</li>
+          <li>
+            <span class="highlight">Hiranya Singh</span> – Hardware Designer
+          </li>
+          <li><span class="highlight">Nipun Batra</span> – Code Developer</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>Project Overview</h2>
+        <p>
+          Our team developed a prototype Battery Management System (BMS) for
+          lithium-ion batteries. Using sensors and microcontrollers, our system
+          tracks voltage, current, SoC, and SoH. It includes components like
+          Arduino UNO, ESP32, ACS712 current sensor, a 25V voltage sensor, and
+          OLED display. The BMS alerts with a buzzer and charges safely via a
+          TP4056 module, with real-time cloud monitoring through ThingSpeak.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>Future Scope</h2>
+        <ul>
+          <li>Multi-cell battery support with balancing</li>
+          <li>Mobile app integration</li>
+          <li>AI-based battery health prediction</li>
+          <li>Solar charging support</li>
+          <li>Compact PCB design and enclosure</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>Learnings from the Project</h2>
+        <ul>
+          <li>Deep understanding of battery management systems</li>
+          <li>Hands-on circuit and sensor integration</li>
+          <li>Programming for Arduino and ESP32</li>
+          <li>Working with ThingSpeak for cloud monitoring</li>
+          <li>Team collaboration and debugging experience</li>
+        </ul>
       </div>
     </div>
     <script>
